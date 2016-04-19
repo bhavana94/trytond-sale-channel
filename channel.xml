@@ -58,8 +58,7 @@
             <field name="res_model">product.product</field>
             <field name="domain">[('channel_listings.channel', 'in', Eval('active_ids'))]</field>
         </record>
-        <record model="ir.action.keyword"
-                id="act_open_sale_channel_keyword">
+        <record model="ir.action.keyword" id="act_open_sale_channel_keyword">
             <field name="keyword">form_relate</field>
             <field name="model">sale.channel,-1</field>
             <field name="action" ref="act_listed_product"/>
@@ -75,7 +74,22 @@
             <field name="model">sale.channel,-1</field>
             <field name="action" ref="act_sale"/>
         </record>
-
+        <record model="ir.action.act_window" id="sale_channel.act_sale_channel_active_form">
+            <field name="name">sale.channel</field>
+            <field name="context">{'active_test': False}</field>
+        </record>
+        <record model="ir.action.act_window.domain" id="action_sale_channel_view_domain_active">
+            <field name="name">Active</field>
+            <field name="sequence" eval="1"/>
+            <field name="domain">[('active', '=', True)]</field>
+            <field name="act_window" ref="sale_channel.act_sale_channel_form"/>
+        </record>
+        <record model="ir.action.act_window.domain" id="action_sale_channel_view_domain_disabled">
+            <field name="name">Disabled</field>
+            <field name="sequence" eval="2"/>
+            <field name="domain">[('active', '=', False)]</field>
+            <field name="act_window" ref="sale_channel.act_sale_channel_form"/>
+        </record>
         <!-- Access -->
         <record model="ir.model.access" id="access_sale_channel">
             <field name="model" search="[('model', '=', 'sale.channel')]"/>
